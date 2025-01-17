@@ -1018,7 +1018,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		}
 		let tierSet: SearchRow[] = table.tierSet;
 		let slices: {[k: string]: number} = table.formatSlices;
-		if (format === 'ubers' || format === 'uber' || format === 'ubersuu' || format === 'nationaldexdoubles') {
+		if (format === 'ubers' || format === 'uber' || format === 'ubersuu' || format === 'nationaldexdoubles' || format === 'nationaldexubersuu') {
 			tierSet = tierSet.slice(slices.Uber);
 		} else if (isVGCOrBS || (isHackmons && dex.gen === 9 && !this.formatType)) {
 			if (format.endsWith('series13') || isHackmons) {
@@ -1086,6 +1086,12 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		if (format === 'doubles' && this.formatType === 'natdex' && table.ndDoublesBans) {
 			tierSet = tierSet.filter(([type, id]) => {
 				if (id in table.ndDoublesBans) return false;
+				return true;
+			});
+		}
+		if (format === 'ubers' && this.formatType === 'natdex' && table.ndUbersUUBans) {
+			tierSet = tierSet.filter(([type, id]) => {
+				if (id in table.ndUbersUUBans) return false;
 				return true;
 			});
 		}
